@@ -1,12 +1,22 @@
-<<<<<<< HEAD
-HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### STS ###
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
@@ -18,15 +28,6 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -37,12 +38,11 @@ out/
 ### VS Code ###
 .vscode/
 
-# Created by https://www.toptal.com/developers/gitignore/api/gradle,intellij+all,database,java,web
-# Edit at https://www.toptal.com/developers/gitignore?templates=gradle,intellij+all,database,java,web
-=======
+### Mac OS ###
+.DS_Store
+
 # Created by https://www.toptal.com/developers/gitignore/api/intellij+all,database,java,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=intellij+all,database,java,gradle
->>>>>>> d7e81e8 (Settings: 프로젝트 생성)
 
 ### Database ###
 *.accdb
@@ -168,24 +168,6 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
-<<<<<<< HEAD
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.wasm
-*.wat
-*.xhtml
-
-=======
->>>>>>> d7e81e8 (Settings: 프로젝트 생성)
 ### Gradle ###
 .gradle
 **/build/
@@ -213,10 +195,4 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-<<<<<<< HEAD
-# End of https://www.toptal.com/developers/gitignore/api/gradle,intellij+all,database,java,web
-
-/src/main/generated/
-=======
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,database,java,gradle
->>>>>>> d7e81e8 (Settings: 프로젝트 생성)
