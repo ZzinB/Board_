@@ -7,4 +7,12 @@
     <insert id="insert">
         insert into tbl_todo (title, dueDate, writer) values (#{title}, #{dueDate}, #{writer})
     </insert>
+
+    <select id="selectAll" resultType="com.example.todo.domain.TodoVO">
+        select * from tbl_todo order by tno desc
+    </select>
+
+    <select id="selectOne" resultType="com.example.todo.domain.TodoVO">
+        select * from tbl_todo where tno = #{tno}
+    </select>
 </mapper>
