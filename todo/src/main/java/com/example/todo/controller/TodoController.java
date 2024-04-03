@@ -49,4 +49,11 @@ public class TodoController {
         return "redirect:/todo/list";
     }
 
+    @GetMapping("/read")
+    public void read(Long tno, Model model){
+        TodoDTO todoDTO = todoService.getOne(tno);
+        log.info(todoDTO);
+        model.addAttribute("dto", todoDTO);
+    }
+
 }
