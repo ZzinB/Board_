@@ -1,5 +1,6 @@
 package com.example.todo.controller;
 
+import com.example.todo.dto.PageRequestDTO;
 import com.example.todo.dto.TodoDTO;
 import com.example.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -23,49 +24,61 @@ public class TodoController {
 
     private final TodoService todoService;
 
+//    @RequestMapping("/list")
+//    public void list(Model model){
+//        log.info("todo list");
+//        model.addAttribute("dtoList", todoService.getAll());
+//    }
+
     @RequestMapping("/list")
-    public void list(Model model){
-        log.info("todo list");
-        model.addAttribute("dtoList", todoService.getAll());
+    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult,  Model model){
+        log.info(pageRequestDTO);
+        if(bindingResult.hasErrors()){
+            pageRequestDTO = pageRequestDTO.builder().build();
+        }
+        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
+
     }
 
     @GetMapping("/register")
     public void registerGET(){
-        log.info("GET register");
+        log.info("GET todo register ...");
     }
 
     @PostMapping("/register")
-    public String registerPOST(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-        log.info("POST register");
-
+    public String registerPost(TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
-            log.info("has Error !!!!!");
-            redirectAttributes.addFlashAttribute("erros", bindingResult.getAllErrors());
+            log.info("has errors ...");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/todo/register";
         }
+
         log.info(todoDTO);
 
         todoService.register(todoDTO);
+
         return "redirect:/todo/list";
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(Long tno, Model model){
+    public void read(Long tno, PageRequestDTO pageRequestDTO, Model model){
         TodoDTO todoDTO = todoService.getOne(tno);
         log.info(todoDTO);
         model.addAttribute("dto", todoDTO);
     }
 
     @PostMapping("/remove")
-    public String remove(Long tno, RedirectAttributes redirectAttributes){
+    public String remove(Long tno, PageRequestDTO pageRequestDTO, RedirectAttributes redirectAttributes){
         log.info("----------remove----------");
         log.info("tno: " + tno);
+
         todoService.remove(tno);
-        return "redirect:/todo/list";
+
+        return "redirect:/todo/list?" + pageRequestDTO.getLink();
     }
 
     @PostMapping("/modify")
-    public String modify(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String modify(PageRequestDTO pageRequestDTO, @Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             log.info("has error !!");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
@@ -73,8 +86,11 @@ public class TodoController {
             return "redirect:/todo/modify";
         }
         log.info(todoDTO);
+
         todoService.modify(todoDTO);
-        return "redirect:/todo/list";
+
+        redirectAttributes.addAttribute("tno", todoDTO.getTno());
+        return "redirect:/todo/read";
     }
 
 }

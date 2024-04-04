@@ -1,6 +1,8 @@
 package com.example.todo.service;
 
 import com.example.todo.domain.TodoVO;
+import com.example.todo.dto.PageRequestDTO;
+import com.example.todo.dto.PageResponseDTO;
 import com.example.todo.dto.TodoDTO;
 import com.example.todo.mapper.TodoMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +33,31 @@ public class TodoServiceImpl implements TodoService{
         todoMapper.insert(todoVO);
     }
 
+//    @Override
+//    public List<TodoDTO> getAll() {
+//        List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+//                .map(vo -> modelMapper.map(vo, TodoDTO.class))
+//                .collect(Collectors.toList());
+//        return dtoList;
+//    }
+
+
     @Override
-    public List<TodoDTO> getAll() {
-        List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+        List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))
                 .collect(Collectors.toList());
-        return dtoList;
+
+        int total = todoMapper.getCount(pageRequestDTO);
+
+        PageResponseDTO<TodoDTO> pageResponseDTO = PageResponseDTO.<TodoDTO>withAll()
+                .dtoList(dtoList)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
+
+        return pageResponseDTO;
     }
 
     @Override
