@@ -1,6 +1,8 @@
 package com.example.todo.service;
 
 import com.example.todo.domain.TodoVO;
+import com.example.todo.dto.PageRequestDTO;
+import com.example.todo.dto.PageResponseDTO;
 import com.example.todo.dto.TodoDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -32,14 +34,25 @@ class TodoServiceTest {
         todoService.register(todoDTO);
     }
 
-    @Test
-    void testGetAll(){
-        //given
-        //when
-        List<TodoDTO> dtoList = todoService.getAll();
+//    @Test
+//    void testGetAll(){
+//        //given
+//        //when
+//        List<TodoDTO> dtoList = todoService.getAll();
+//
+//        //then
+//        log.info(dtoList);
+//    }
 
-        //then
-        log.info(dtoList);
+    @Test
+    void testPaging(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
+
+        PageResponseDTO<TodoDTO> responseDTO = todoService.getList(pageRequestDTO);
+
+        log.info(responseDTO);
+
+        responseDTO.getDtoList().stream().forEach(todoDTO -> log.info(todoDTO));
     }
 
 }
