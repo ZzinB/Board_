@@ -18,8 +18,11 @@
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="formatters">
             <set>
+                <bean class="com.example.todo.controller.formatter.LocalDateFormatter"/>
                 <bean class="com.example.todo.controller.formatter.CheckboxFormatter"></bean>
             </set>
         </property>
     </bean>
+
+    <mvc:annotation-driven  conversion-service="conversionService" />
 </beans>
