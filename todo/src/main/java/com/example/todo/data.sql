@@ -1,0 +1,1 @@
+insert into tbl_todo(title, dueDate, writer) (select title, dueDate, writer from tbl_todo);
