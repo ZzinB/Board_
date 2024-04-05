@@ -50,4 +50,11 @@ class BoardRepositoryTest {
         board.change("update title 100", "update content 100");
         boardRepository.save(board);
     }
+
+    @Test
+    void testDelete(){
+        Long bno = 1L;
+
+        boardRepository.deleteById(bno);
+    }
 }
