@@ -1,6 +1,8 @@
 package com.example.board.service;
 
 import com.example.board.dto.BoardDTO;
+import com.example.board.dto.PageRequestDTO;
+import com.example.board.dto.PageResponseDTO;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,20 @@ class BoardServiceTest {
                 .build();
 
         boardService.modify(boardDTO);
+    }
+
+    @Test
+    void testList(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .type("tcw")
+                .keyword("1")
+                .page(1)
+                .size(10)
+                .build();
+
+        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+
+        log.info(responseDTO);
     }
 
 }
