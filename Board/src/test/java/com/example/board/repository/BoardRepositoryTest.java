@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -39,5 +40,14 @@ class BoardRepositoryTest {
         Optional<Board> result = boardRepository.findById(bno);
         Board board = result.orElseThrow();
         log.info(board);
+    }
+
+    @Test
+    void testUpdate(){
+        Long bno = 100L;
+        Optional<Board> result = boardRepository.findById(bno);
+        Board board = result.orElseThrow();
+        board.change("update title 100", "update content 100");
+        boardRepository.save(board);
     }
 }
