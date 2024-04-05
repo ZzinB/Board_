@@ -29,4 +29,15 @@ class BoardServiceTest {
         log.info("bno: " + bno);
     }
 
+    @Test
+    void testModify(){
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(101L)
+                .title("업데이트 !!!101")
+                .content("내용 업데이트 !!")
+                .build();
+
+        boardService.modify(boardDTO);
+    }
+
 }
