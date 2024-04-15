@@ -168,4 +168,11 @@ class BoardRepositoryTest {
             boardRepository.save(board);
         }
     }
+
+    @Test
+    @Transactional
+    void testSearchImageReplyCount(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        boardRepository.searchWithAll(null, null, pageable);
+    }
 }
