@@ -1,6 +1,7 @@
 package com.example.board.repository;
 
 import com.example.board.domain.Board;
+import com.example.board.domain.BoardImage;
 import com.example.board.dto.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -119,5 +120,17 @@ class BoardRepositoryTest {
         }
 
         boardRepository.save(board);
+    }
+
+    @Test
+    public void testReadWithImages(){
+        Optional<Board> result = boardRepository.findByIdWithImage(1L);
+        Board board = result.orElseThrow();
+        log.info(board);
+        log.info("--------------------");
+        for (BoardImage boardImage : board.getImageSet()) {
+            log.info(boardImage);
+
+        }
     }
 }
