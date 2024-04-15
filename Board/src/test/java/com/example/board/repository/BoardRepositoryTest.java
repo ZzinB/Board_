@@ -4,6 +4,7 @@ import com.example.board.domain.Board;
 import com.example.board.domain.BoardImage;
 import com.example.board.dto.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
+import nonapi.io.github.classgraph.utils.LogNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
@@ -25,6 +28,9 @@ class BoardRepositoryTest {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Test
     void testInsert(){
@@ -132,5 +138,14 @@ class BoardRepositoryTest {
             log.info(boardImage);
 
         }
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll(){
+        Long bno = 1L;
+        replyRepository.deleteByBoard_Bno(bno);
+        boardRepository.deleteById(bno);
     }
 }
