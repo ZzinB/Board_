@@ -1,10 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.domain.Board;
-import com.example.board.dto.BoardDTO;
-import com.example.board.dto.BoardListReplyCountDTO;
-import com.example.board.dto.PageRequestDTO;
-import com.example.board.dto.PageResponseDTO;
+import com.example.board.dto.*;
 import com.example.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -88,5 +85,10 @@ public class BoardServiceImpl implements BoardService{
                 .dtoList(result.getContent())
                 .total((int)result.getTotalElements())
                 .build();
+    }
+
+    @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+        return null;
     }
 }
