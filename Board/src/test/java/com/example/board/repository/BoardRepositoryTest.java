@@ -148,4 +148,24 @@ class BoardRepositoryTest {
         replyRepository.deleteByBoard_Bno(bno);
         boardRepository.deleteById(bno);
     }
+
+    //더미 데이터
+    @Test
+    void testInsertAll(){
+        for (int i=1 ; i<=100 ; i++) {
+            Board board = Board.builder()
+                    .title("Title is " + i)
+                    .content("Content " + i)
+                    .writer("writer " + i)
+                    .build();
+
+            for (int j=0 ; j<3 ; j++){
+                if(i%5 == 0){
+                    continue;
+                }
+                board.addImage(UUID.randomUUID().toString(), i + "file" + j + ".jpg");
+        }
+            boardRepository.save(board);
+        }
+    }
 }
