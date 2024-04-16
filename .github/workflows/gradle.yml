@@ -8,7 +8,9 @@ on:
 
 permissions:
   contents: read
-      
+=======
+      contents: read
+
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
