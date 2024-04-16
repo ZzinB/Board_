@@ -130,7 +130,7 @@ class BoardRepositoryTest {
 
     @Test
     public void testReadWithImages(){
-        Optional<Board> result = boardRepository.findByIdWithImage(1L);
+        Optional<Board> result = boardRepository.findByIdWithImage(2L);
         Board board = result.orElseThrow();
         log.info(board);
         log.info("--------------------");
