@@ -8,9 +8,7 @@ on:
 
 permissions:
   contents: read
-=======
-      contents: read
-
+      
 jobs:
   build-docker-image:
     runs-on: ubuntu-latest
@@ -18,13 +16,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    # 1. Java 17 설정
+    # 1. Java 17 세팅
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
-        distribution: 'adopt'
-        
+
     # 2. Gradle 빌드
     - name: Build with Gradle
       uses: eskatos/gradle-command-action@v1
@@ -35,7 +32,7 @@ jobs:
     # 3. Spring Boot 애플리케이션 Docker 이미지 빌드
     - name: Build Docker Image
       run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/github-actions-demo .
-
+      
     # 4. Docker Hub 로그인 및 이미지 푸시
     - name: Push Docker Image to Docker Hub
       run: |
