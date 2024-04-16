@@ -75,3 +75,7 @@ sourceSets {
         }
     }
 }
+
+jar {
+    enabled = false
+}
