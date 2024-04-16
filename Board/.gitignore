@@ -1,8 +1,8 @@
 HELP.md
 .gradle
-build/
+#build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
+#!**/src/main/**/build/
 !**/src/test/**/build/
 
 ### STS ###
@@ -150,7 +150,7 @@ fabric.properties
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Package Files #
+# Package Files #정
 #*.jar
 *.war
 *.nar
@@ -180,8 +180,8 @@ replay_pid*
 
 ### Gradle ###
 .gradle
-**/build/
-!src/**/build/
+#**/build/
+#!src/**/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
