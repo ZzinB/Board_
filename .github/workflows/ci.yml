@@ -23,23 +23,32 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
         
-    # 2. Gradle 빌드
+    # # 2. Gradle 빌드
+    # - name: Build with Gradle
+    #   uses: eskatos/gradle-command-action@v1
+    #   with:
+    #     gradle-version: '7.5'
+    #     args: bootBuildImage
+
+    # # 3. Spring Boot 애플리케이션 Docker 이미지 빌드
+    # - name: Build Docker Image
+    #   run: docker build --build-arg JAR_FILE=build/libs/\*.jar -t ${{ secrets.DOCKERHUB_USERNAME }}/board .
+
     - name: Build with Gradle
-      uses: eskatos/gradle-command-action@v1
-      with:
-        gradle-version: '7.5'
-        args: bootBuildImage
+      run: ./gradlew bootJar
 
-    # 3. Spring Boot 애플리케이션 Docker 이미지 빌드
-    - name: Build Docker Image
-      run: docker build --build-arg JAR_FILE=build/libs/\*.jar -t ${{ secrets.DOCKERHUB_USERNAME }}/board .
+    # # 4. Docker Hub 로그인 및 이미지 푸시
+    # - name: Push Docker Image to Docker Hub
+    #   run: |
+    #     echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+    #     docker push ${{ secrets.DOCKERHUB_USERNAME }}/board
+    #   env:
+    #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    #     DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-
-    # 4. Docker Hub 로그인 및 이미지 푸시
-    - name: Push Docker Image to Docker Hub
+     ## 도커 이미지 빌드 후 도커허브에 push하기
+    - name: web docker build and push
       run: |
-        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/board
-      env:
-        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build -t ${{ secrets.DOCKER_REPO }} .
+        docker push ${{ secrets.DOCKER_REPO }}
