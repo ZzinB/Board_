@@ -38,3 +38,5 @@ out/
 
 application.properties
 
+### Git Submodule
+src/main/resources/application.yml
