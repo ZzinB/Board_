@@ -23,12 +23,17 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-    # Github Submodule에서 환경변수 가져오기
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    # # Github Submodule에서 환경변수 가져오기
+    #   - name: Checkout repo
+    #     uses: actions/checkout@v4
+    #     with:
+    #       token: ${{secrets.CONFIG_TOKEN}}
+    #       submodules: true
+      - name: Checkout submodules
+        uses: actions/checkout@v3
         with:
-          token: ${{secrets.CONFIG_TOKEN}}
-          submodules: true
+          submodules: recursive
+          token: ${{ secrets.CONFIG_TOKEN }}
       
       # 2. Gradle 빌드
       - name: Build with Gradle
