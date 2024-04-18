@@ -42,7 +42,7 @@ jobs:
       - name: Checkout submodules
         uses: actions/checkout@v4
         with:
-          submodules: true
+          submodules: recursive
           token: ${{ secrets.CONFIG_TOKEN }}
       
       # 2. Gradle 빌드
