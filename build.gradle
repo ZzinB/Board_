@@ -79,3 +79,14 @@ sourceSets {
 jar {
     enabled = false
 }
+
+processResources.dependsOn('copySecret')
+
+tasks.register('copySecret', Copy) {
+    description = 'Copy submodules to project'
+
+    from('./src/main/resources/board_config') {
+        include('*.yml')
+    }
+    into('src/main/resources')
+}
