@@ -23,26 +23,51 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-    # # Github Submodule에서 환경변수 가져오기
-    #   - name: Checkout repo
-    #     uses: actions/checkout@v4
-    #     with:
-    #       token: ${{secrets.CONFIG_TOKEN}}
-    #       submodules: true
-      - name: Checkout submodules
-        uses: actions/checkout@v3
+    # gradle caching - 빌드 시간 향상
+      - name: Gradle Caching
+        uses: actions/cache@v3
         with:
-          submodules: recursive
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      #Set up Gradle
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+    # Github Submodule에서 환경변수 가져오기
+      - name: Checkout submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
           token: ${{ secrets.CONFIG_TOKEN }}
       
       # 2. Gradle 빌드
       - name: Build with Gradle
-        run: ./gradlew bootJar
+        run: ./gradlew clean build -x test bootJar
 
 
       # 도커 이미지 빌드 후 도커허브에 push하기
-      - name: web docker build and push
-        run: |
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_REPO }} .
-          docker push ${{ secrets.DOCKER_REPO }}
+      # - name: web docker build and push
+      #   run: |
+      #     docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+      #     docker build -t ${{ secrets.DOCKER_REPO }} .
+      #     docker push ${{ secrets.DOCKER_REPO }}
+
+
+      # DockerHub 로그인
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
+
+      # Docker image Build해서 DockerHub에 Push
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
