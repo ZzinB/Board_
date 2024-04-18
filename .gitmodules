@@ -1,0 +1,3 @@
+[submodule "board_config"]
+	path = board_config
+	url = https://github.com/ZzinB/board_config.git
