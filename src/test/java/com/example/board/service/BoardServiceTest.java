@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -54,6 +57,28 @@ class BoardServiceTest {
         PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
 
         log.info(responseDTO);
+    }
+
+    @Test
+    public void testRegisterWithImages(){
+        log.info(boardService.getClass().getName());
+
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("Title")
+                .content("Content")
+                .writer("user 0")
+                .build();
+
+        boardDTO.setFileNames(
+                Arrays.asList(
+                        UUID.randomUUID() + "_aaa.jpg",
+                        UUID.randomUUID() + "_bbb.jpg",
+                        UUID.randomUUID() + "_ccc.jpg"
+                )
+        );
+        Long bno = boardService.register(boardDTO);
+
+        log.info("bno: " + bno);
     }
 
 }
