@@ -39,4 +39,4 @@ out/
 application.properties
 
 ### Git Submodule
-src/main/resources/board_config/application.yml
+#src/main/resources/board_config/application.yml
