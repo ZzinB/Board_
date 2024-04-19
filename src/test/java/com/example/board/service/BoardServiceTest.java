@@ -1,8 +1,6 @@
 package com.example.board.service;
 
-import com.example.board.dto.BoardDTO;
-import com.example.board.dto.PageRequestDTO;
-import com.example.board.dto.PageResponseDTO;
+import com.example.board.dto.*;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -100,6 +99,28 @@ class BoardServiceTest {
     void testRemoveAll(){
         Long bno = 1L;
         boardService.remove(bno);
+    }
+
+    @Test
+    void testListWithAll(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .build();
+        PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
+
+        List<BoardListAllDTO> dtoList = responseDTO.getDtoList();
+
+        dtoList.forEach(boardListAllDTO -> {
+            log.info(boardListAllDTO.getBno() + ":" + boardListAllDTO.getTitle());
+
+            if(boardListAllDTO.getBoardImages() != null){
+                for(BoardImageDTO boardImage : boardListAllDTO.getBoardImages()){
+                    log.info(boardImage);
+                }
+            }
+            log.info("--------------------");
+        });
     }
 
 }
