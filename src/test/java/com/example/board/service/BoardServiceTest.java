@@ -37,11 +37,13 @@ class BoardServiceTest {
     @Test
     void testModify(){
         BoardDTO boardDTO = BoardDTO.builder()
-                .bno(101L)
-                .title("업데이트 !!!101")
+                .bno(709L)
+                .title("업데이트 !!!709")
                 .content("내용 업데이트 !!")
                 .build();
 
+        //첨부파일 추가
+        boardDTO.setFileNames(Arrays.asList(UUID.randomUUID() + "_zzz.jpg"));
         boardService.modify(boardDTO);
     }
 
@@ -83,7 +85,7 @@ class BoardServiceTest {
 
     @Test
     public void testReadAll(){
-        Long bno = 707L;
+        Long bno = 709L;
 
         BoardDTO boardDTO = boardService.readOne(bno);
 
