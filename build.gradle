@@ -85,7 +85,8 @@ processResources.dependsOn('copySecret')
 tasks.register('copySecret', Copy) {
     description = 'Copy submodules to project'
 
-    from('./src/main/resources/board_config') {
+    //from('./src/main/resources/board_config') {
+    from('./board_config') {
         include('*.yml')
     }
     into('src/main/resources')
