@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +26,7 @@ import javax.sql.DataSource;
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)  //권한 설정
+@EnableWebSecurity
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
@@ -37,25 +39,33 @@ public class CustomSecurityConfig {
 
     //모든 사용자가 모든 경로에 접근 가능
     @Bean
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info(("----------configure----------"));
-        //커스텀 로그인 페이지
-        http.formLogin().loginPage("/member/login");
-        // CSRF 토큰 비활성화
-        http.csrf().disable();
 
-        http.rememberMe()
-                .key("12345678")
-                .tokenRepository(persistentTokenRepository())
-                .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(60*60*24*30);
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());  //403
+        // 커스텀 로그인 페이지 설정
+        http
+                .oauth2Login(oauth2Login ->
+                        oauth2Login
+                                .loginPage("/member/login")
+                                .successHandler(authenticationSuccessHandler())
+                )
+                .csrf(csrf ->
+                        csrf.disable()
+                )
+                .rememberMe(rememberMe ->
+                        rememberMe
+                                .key("12345678")
+                                .tokenRepository(persistentTokenRepository())
+                                .userDetailsService(userDetailsService)
+                                .tokenValiditySeconds(60 * 60 * 24 * 30)
+                )
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.accessDeniedHandler(accessDeniedHandler())
+                );
 
-        http.oauth2Login()
-                .loginPage("/member/login")
-                .successHandler(authenticationSuccessHandler());
         return http.build();
     }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
