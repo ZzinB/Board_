@@ -1,3 +1,17 @@
 ## Board 프로젝트
-#### 게시판 프로젝트로 게시글로 소통하는 페이지를 구성하였다.
 #### Spring Boot + Sprnig Data JPA + MariaDB + Swagger + Githun Action + Docker + Spring Security + 소셜 로그인
+
+
+## 프로젝트 설명
+- 게시판 프로젝트로 게시글로 소통하는 페이지를 구성하였다.
+
+## 고민
+- [API 명세서(Swagger)](https://myste-leee.tistory.com/205)
+- [Querydsl 을 이용한 동적 쿼리 처리](https://myste-leee.tistory.com/221)
+- [스프링 시큐리티](https://myste-leee.tistory.com/240)
+- [소셜 로그인 처리](https://myste-leee.tistory.com/241)
+- [대용량 데이터 성능을 어떻게 높일까? (인덱싱, 페이징)](https://myste-leee.tistory.com/223)
+
+## 페이지 별 설명
+
+. . . 작성중
