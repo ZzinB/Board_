@@ -20,6 +20,3 @@
     - [@OneToMany](https://myste-leee.tistory.com/222), [다대일](https://myste-leee.tistory.com/226)
  
   
-## 페이지 별 설명
-
-. . . 작성중
