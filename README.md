@@ -18,5 +18,12 @@
 - [N+1문제 : @BatchSize](https://myste-leee.tistory.com/229)
 - 파일 업로드
     - [@OneToMany](https://myste-leee.tistory.com/222), [다대일](https://myste-leee.tistory.com/226)
- 
+
+
+
   
+### **📌  기본적인 기능 및 테스트**
+
+### **📌 상세 기능구현**
+
+### **📌 추가 기능구현**
